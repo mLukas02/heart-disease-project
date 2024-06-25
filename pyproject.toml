@@ -1,8 +1,11 @@
 [tool.poetry]
-name = "heart_disease"
+name = "heart_ml"
 version = "0.1.0"
 description = "This project aims to build and evaluate machine learning models to accurately classify the presence of heart disease based on the provided attributes."
 authors = ["Mikhail Lukashevich <mikhail.n.lukashevich@gmail.com>"]
+
+[tool.poetry.scripts]
+train = "heart_ml.train:train"
 
 [tool.poetry.dependencies]
 python = "^3.9"

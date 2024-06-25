@@ -1,7 +1,6 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
-from sklearn.impute import SimpleImputer
-from sklearn.preprocessing import OneHotEncoder
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 
 # Define categorical and numerical features
 categorical_features = ['sex', 'cp', 'fbs', 'restecg', 'exang', 'slope']
@@ -27,6 +26,11 @@ def preprocess_data(data):
     for column in numerical_features:
         data = handle_outliers(data, column)
         
+    # Scale numerical features
+    scaler = StandardScaler()
+    data[numerical_features] = scaler.fit_transform(data[numerical_features])
+    
+        
     # Handle categorical variables
     categorical_cols = data[categorical_features]
     encoder = OneHotEncoder(drop='first', sparse_output=False)
@@ -50,7 +54,7 @@ if __name__ == "__main__":
     random_state = 42
     test_split_ratio = 0.2
     X_train, X_test, y_train, y_test = get_dataset(dataset_path, random_state, test_split_ratio)
-    X_train.to_csv("../data/interim/train_features.csv", index=False)
-    X_test.to_csv("../data/interim/test_features.csv", index=False)
-    y_train.to_csv("../data/interim/train_target.csv", index=False)
-    y_test.to_csv("../data/interim/test_target.csv", index=False)
+    X_train.to_csv("../data/processed/train_features.csv", index=False)
+    X_test.to_csv("../data/processed/test_features.csv", index=False)
+    y_train.to_csv("../data/processed/train_target.csv", index=False)
+    y_test.to_csv("../data/processed/test_target.csv", index=False)
